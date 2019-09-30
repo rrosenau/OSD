@@ -29,7 +29,7 @@ Option 3: Get-OSDProperty -Property SystemDrive
 https://osd.osdeploy.com/module/functions/get-osdproperty
 
 .NOTES
-19.9.29.1 Contributed by Ben Whitmore @byteben
+19.9.29.1 Help Added Contributed by Ben Whitmore @byteben
 19.9.29 Contributed by David Segura @SeguraOSD
 #>
 function Get-OSDProperty {
