@@ -5,10 +5,25 @@ Evaluates an OSD Property and returns a Boolean value ($true or $false)
 .DESCRIPTION
 Evaluates an OSD Property and returns a Boolean value ($true or $false)
 
+.EXAMPLE
+OSDBool IsAdmin
+Returns Boolean True/False if the Current User has Administrative privileges for the session
+Option 1: OSDBool IsAdmin
+Option 2: Get-OSDBool IsAdmin
+Option 3: Get-OSDBool IsAdmin
+
+.EXAMPLE
+OSDBool IsDesktop
+Returns Boolean True/False if the Device is a Desktop. Property evaluated True if 'ChassisTypes' from the Win32_SystemEnclosure Class = "3", "4", "5", "6", "7", "15", "16" 
+Option 1: OSDBool IsDesktop
+Option 2: Get-OSDBool IsDesktop
+Option 3: Get-OSDBool -property IsDesktop
+
 .LINK
 https://osd.osdeploy.com/module/functions/get-osdbool
 
 .NOTES
+19.10.1.1   Ben Whitmore @byteben
 19.10.1     David Segura @SeguraOSD
 #>
 function Get-OSDBool {
