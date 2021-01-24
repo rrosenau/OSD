@@ -9,7 +9,6 @@ Displays information about the OSD Module
 https://osd.osdeploy.com/module/functions/get-osd
 
 .NOTES
-19.10.1     David Segura @SeguraOSD
 #>
 function Get-OSD {
     [CmdletBinding()]
@@ -66,25 +65,5 @@ function Get-OSD {
         Write-Host
         Write-Host 'Update the OSD Module'
         Write-Host 'Update-Module OSD -Force' -ForegroundColor Cyan
-        Write-Host
-        Write-Host "OSD Module Collaborators"
-        Write-Host "Andrew Jimenez " -ForegroundColor Cyan -NoNewline
-        Write-Host "@AndrewJimenez_" -ForegroundColor Gray
-        Write-Host "Ben Whitmore " -ForegroundColor Cyan -NoNewline
-        Write-Host "@byteben" -ForegroundColor Gray
-        Write-Host "David Segura " -ForegroundColor Cyan -NoNewline
-        Write-Host "@SeguraOSD" -ForegroundColor Gray
-        Write-Host "Donna Ryan " -ForegroundColor Cyan -NoNewline
-        Write-Host "@TheNotoriousDRR" -ForegroundColor Gray
-        Write-Host "Gary Blok " -ForegroundColor Cyan -NoNewline
-        Write-Host "@gwblok" -ForegroundColor Gray
-        Write-Host "Jerome Bezet-Torres " -ForegroundColor Cyan -NoNewline
-        Write-Host "@JM2K69" -ForegroundColor Gray
-        Write-Host "Jordan Benzing " -ForegroundColor Cyan -NoNewline
-        Write-Host "@JordanTheITguy" -ForegroundColor Gray
-        Write-Host "Manel Rodero " -ForegroundColor Cyan -NoNewline
-        Write-Host "@manelrodero" -ForegroundColor Gray
-        Write-Host "Nathan Bridges " -ForegroundColor Cyan -NoNewline
-        Write-Host "@nathanjbridges" -ForegroundColor Gray
     }
 }

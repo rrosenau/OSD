@@ -7,7 +7,7 @@
 RootModule = 'OSD.psm1'
 
 # Version number of his module.
-ModuleVersion = '20.8.19.1'
+ModuleVersion = '21.1.23.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -28,17 +28,6 @@ Copyright = '(c) 2020 David Segura osdeploy.com. All rights reserved.'
 Description = @'
 https://osd.osdeploy.com
 OSD PowerShell Module is a collection of OSD shared functions
-
-Collaborators
-Andrew Jimenez - @AndrewJimenez_
-Ben Whitmore - @byteben
-David Segura - @SeguraOSD
-Donna Ryan - @TheNotoriousDRR
-Gary Blok - @gwblok
-Jerome Bezet-Torres - @JM2K69
-Jordan Benzing - @JordanTheITguy
-Nathan Bridges - @nathanjbridges
-Manel Rodero - @manelrodero
 '@
 
 # Minimum version of the Windows PowerShell engine required by this module
@@ -81,12 +70,13 @@ PowerShellVersion = '5.0'
 FunctionsToExport = 'Get-OSD',
                     'Get-OSDClass','Get-OSDGather','Get-OSDPower','Get-OSDWinPE',
                     'Get-OSDDriver','Get-OSDDriverWmiQ',
+                    'Get-Screenshot',
                     'Get-RegCurrentVersion',
                     'Get-SessionsXml',
                     'Dismount-WindowsImageOSD','Edit-WindowsImageOSD','Mount-WindowsImageOSD','Update-WindowsImageOSD',
                     'Initialize-DiskOSD','New-OSDDisk',
                     'New-PartitionOSDSystem','New-PartitionOSDRecovery','New-PartitionOSDWindows',
-                    'Remove-AppxOnline',
+                    'Remove-AppxOnline','Get-FullRes',
                     'Save-OSDDownload'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
