@@ -1,8 +1,10 @@
 function Get-ScreenshotDpiScaling {
-    [CmdletBinding()]
-    Param ()
+  [CmdletBinding()]
+  Param ()
+
+  Add-Type -Assembly System.Drawing
     # Get DPI Scaling
-    [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
+    #[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 
     Add-Type @'
   using System; 
@@ -38,25 +40,27 @@ function Initialize-Screenshot {
     Write-Verbose "Screen DPI Scaling is $([Math]::round($Global:ScreenshotDpiScaling, 0)) Percent"
 
     # Get Virtual Screen Resolution
-    [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+    #[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+    Add-Type -Assembly System.Windows.Forms
     $Global:VirtualScreen = [System.Windows.Forms.SystemInformation]::VirtualScreen
     Write-Verbose "Virtual Screen resolution is $($Global:VirtualScreen.Width) x $($Global:VirtualScreen.Height)"
 
     # Get Physical Screen Resolution
-    $scale = [math]::round([dpi]::scaling(), 2) * 100
     [int32]$Global:VirtualScreenWidth = [math]::round($(($Global:VirtualScreen.Width * $Global:ScreenshotDpiScaling) / 100), 0)
     [int32]$Global:VirtualScreenHeight = [math]::round($(($Global:VirtualScreen.Height * $Global:ScreenshotDpiScaling) / 100), 0)
     Write-Verbose "Physical Screen resolution is $($Global:VirtualScreenWidth) x $($Global:VirtualScreenHeight)"
 }
 function Start-Screenshot {
-    [CmdletBinding()]
-    Param ()
-    # Create Bitmap Object
-    $Global:Bitmap = New-Object System.Drawing.Bitmap $Global:VirtualScreenWidth, $Global:VirtualScreenHeight
+  [CmdletBinding()]
+  Param ()
 
-    # Create a Graphics Object to Draw the Bitmap
-    $Global:Graphics = [System.Drawing.Graphics]::FromImage($Global:Bitmap)
+  # Create Bitmap Object
+  Add-Type -Assembly System.Drawing
+  $Global:Bitmap = New-Object System.Drawing.Bitmap $Global:VirtualScreenWidth, $Global:VirtualScreenHeight
 
-    # Take a Screenshot
-    $Global:Graphics.CopyFromScreen($Global:VirtualScreen.Left, $Global:VirtualScreen.Top, 0, 0, $Global:Bitmap.Size)
+  # Create a Graphics Object to Draw the Bitmap
+  $Global:Graphics = [System.Drawing.Graphics]::FromImage($Global:Bitmap)
+
+  # Take a Screenshot
+  $Global:Graphics.CopyFromScreen($Global:VirtualScreen.Left, $Global:VirtualScreen.Top, 0, 0, $Global:Bitmap.Size)
 }

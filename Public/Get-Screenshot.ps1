@@ -38,40 +38,44 @@ function Get-Screenshot {
     #======================================================================================================
     #	Force
     #======================================================================================================
-    if (! ($Force)) {
-        Write-Verbose -Verbose 'Get-Screenshot [[-Path] <String>] [[-Prefix] <String>] [[-Delay] <UInt32>] [[-Count] <UInt32>] [-Clipboard] [-Force] [-Verbose]'
-        Write-Verbose -Verbose '-Path       Directory where the screenshots will be saved'
-        if (!(Test-Path "$Path")) {
-            Write-Verbose -Verbose '            Directory does not exist and will be created'
-        }
-        Write-Verbose -Verbose '            Default: $Env:TEMP\Screenshots'
-        Write-Verbose -Verbose "            Value: $Path"
-        Write-Verbose -Verbose ''
-        $DateString = (Get-Date).ToString('yyyyMMdd_HHmmss')
-        Write-Verbose -Verbose "-Prefix     Pattern in the file name $($Prefix)_$($DateString).png"
-        Write-Verbose -Verbose '            Default: Screenshot'
-        Write-Verbose -Verbose "            Value: $Prefix"
-        Write-Verbose -Verbose ''
-        Write-Verbose -Verbose '-Count      Number of screenshots to take'
-        Write-Verbose -Verbose '            Default: 1'
-        Write-Verbose -Verbose "            Value: $Count"
-        Write-Verbose -Verbose ''
-        Write-Verbose -Verbose '-Delay      Delay before taking the screenshot in seconds'
-        Write-Verbose -Verbose '            Default: 1'
-        Write-Verbose -Verbose "            Value: $Delay"
-        Write-Verbose -Verbose ''
-        Write-Verbose -Verbose '-Clipboard  Additionally copies the screenshot to the Clipboard'
-        Write-Verbose -Verbose ''
-        Write-Verbose -Verbose '-Force      Required for execution of Get-Screenshot'
-        Write-Verbose -Verbose ''
-        Write-Verbose -Verbose '-Verbose    Displays helpfut startus messages'
-        Write-Verbose -Verbose ''
-        Break
+    if ($false -eq $Force) {
+        $VerbosePreference = 'Continue'
     }
+        Write-Verbose 'Get-Screenshot [[-Path] <String>] [[-Prefix] <String>] [[-Delay] <UInt32>] [[-Count] <UInt32>] [-Clipboard] [-Force] [-Verbose]'
+        Write-Verbose ''
+        Write-Verbose '-Path       Directory where the screenshots will be saved'
+        if (!(Test-Path "$Path")) {
+            Write-Verbose '            Directory does not exist and will be created'
+        }
+        Write-Verbose '            Default: $Env:TEMP\Screenshots'
+        Write-Verbose "            Value: $Path"
+        Write-Verbose ''
+        $DateString = (Get-Date).ToString('yyyyMMdd_HHmmss')
+        Write-Verbose "-Prefix     Pattern in the file name $($Prefix)_$($DateString).png"
+        Write-Verbose '            Default: Screenshot'
+        Write-Verbose "            Value: $Prefix"
+        Write-Verbose ''
+        Write-Verbose '-Count      Number of screenshots to take'
+        Write-Verbose '            Default: 1'
+        Write-Verbose "            Value: $Count"
+        Write-Verbose ''
+        Write-Verbose '-Delay      Delay before taking the screenshot in seconds'
+        Write-Verbose '            Default: 1'
+        Write-Verbose "            Value: $Delay"
+        Write-Verbose ''
+        Write-Verbose '-Clipboard  Additionally copies the screenshot to the Clipboard'
+        Write-Verbose ''
+        Write-Verbose '-Force      Required for execution of Get-Screenshot'
+        Write-Verbose ''
+        Write-Verbose '-Verbose    Displays helpfut startus messages'
+        Write-Verbose ''
     #======================================================================================================
     #	Initialize
     #======================================================================================================
     Initialize-Screenshot
+    if (! ($Force)) {
+        Break
+    }
     #======================================================================================================
     #	Create Folder
     #======================================================================================================
@@ -94,11 +98,13 @@ function Get-Screenshot {
         Start-Screenshot
         #======================================================================================================
         #	Copy the Screenshot to the Clipboard
-        #   https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.clipboard.setdataobject?view=net-5.0
+        #   https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.clipboard.setimage?view=net-5.0
         #======================================================================================================
         if ($Clipboard) {
             Write-Verbose "Copying screenshot to the Clipboard"
-            [Windows.Forms.Clipboard]::SetDataObject($Global:Bitmap)
+            Add-Type -Assembly System.Drawing
+            Add-Type -Assembly System.Windows.Forms
+            [System.Windows.Forms.Clipboard]::SetImage($Global:Bitmap)
         }
         #======================================================================================================
         #	Save the Screenshot to File
@@ -108,11 +114,11 @@ function Get-Screenshot {
         $FileName = "$($Prefix)_$($DateString).png"
         Write-Verbose "Saving screenshot $i of $Count to to $Path\$FileName"
         $Global:Bitmap.Save("$Path\$FileName")
-        #======================================================================================================
-        #	Close
-        #======================================================================================================
-        $Global:Graphics.Dispose()
-        $Global:Bitmap.Dispose()
-        #======================================================================================================
     }
+    #======================================================================================================
+    #	Close
+    #======================================================================================================
+    #======================================================================================================
+    $Global:Graphics.Dispose()
+    $Global:Bitmap.Dispose()
 }
