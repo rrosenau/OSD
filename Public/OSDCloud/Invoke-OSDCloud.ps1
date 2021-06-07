@@ -251,7 +251,8 @@ function Invoke-OSDCloud {
     if (Test-IsVM) {
         Write-Host -ForegroundColor Cyan "$((Get-Date).ToString('yyyy-MM-dd-HHmmss')) New-OSDisk -NoRecoveryPartition -Force -ErrorAction Stop"
         if ($OSDCloud.Test -ne $true) {
-            New-OSDisk -NoRecoveryPartition -Force -ErrorAction Stop
+            New-OSDisk -NoRecoveryPartition -Force -ErrorAction Stop -PartitionStyle GPT
+           
         }
         Write-Host "=========================================================================" -ForegroundColor Cyan
         Write-Host "| SYSTEM | MSR |                    WINDOWS                             |" -ForegroundColor Cyan
@@ -260,7 +261,7 @@ function Invoke-OSDCloud {
     else {
         Write-Host -ForegroundColor Cyan "$((Get-Date).ToString('yyyy-MM-dd-HHmmss')) New-OSDisk -Force -ErrorAction Stop"
         if ($OSDCloud.Test -ne $true) {
-            New-OSDisk -Force -ErrorAction Stop
+            New-OSDisk -Force -ErrorAction Stop -PartitionStyle GPT
         }
         Write-Host "=========================================================================" -ForegroundColor Cyan
         Write-Host "| SYSTEM | MSR |                    WINDOWS                  | RECOVERY |" -ForegroundColor Cyan
